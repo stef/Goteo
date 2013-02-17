@@ -956,14 +956,23 @@ namespace Goteo\Model {
                  ++$score;
             }
 
-            if (empty($this->contract_nif)) {
-                $errors['userPersonal']['contract_nif'] = Text::get('mandatory-project-field-contract_nif');
-            } elseif (!Check::nif($this->contract_nif) && !Check::vat($this->contract_nif)) {
-                $errors['userPersonal']['contract_nif'] = Text::get('validate-project-value-contract_nif');
-            } else {
-                 $okeys['userPersonal']['contract_nif'] = 'ok';
-                 ++$score;
-            }
+						if($config['vat_required']) {
+	            if (empty($this->contract_nif)) {
+	                $errors['userPersonal']['contract_nif'] = Text::get('mandatory-project-field-contract_nif');
+	            } else {
+								$valfunc = $config['locale']['function_validate_vat'];
+								$result = !call_user_func($valfunc, $this->entity_nif);
+								/* !Check::nif($this->contract_nif) && !Check::vat($this->contract_nif) */
+								if( $result ) {
+		                $errors['userPersonal']['contract_nif'] = Text::get('validate-project-value-contract_nif');
+		            } else {
+		                 $okeys['userPersonal']['contract_nif'] = 'ok';
+		                 ++$score;
+		            }
+							}
+						} else {
+							$okeys['userPersonal']['contract_nif'] = 'ok';
+						}
 
             if (empty($this->contract_email)) {
                 $errors['userPersonal']['contract_email'] = Text::get('mandatory-project-field-contract_email');
@@ -987,13 +996,22 @@ namespace Goteo\Model {
                      $okeys['userPersonal']['entity_name'] = 'ok';
                 }
 
-                if (empty($this->entity_cif)) {
-                    $errors['userPersonal']['entity_cif'] = Text::get('mandatory-project-field-entity_cif');
-                } elseif (!Check::nif($this->entity_cif)) {
-                    $errors['userPersonal']['entity_cif'] = Text::get('validate-project-value-entity_cif');
-                } else {
-                     $okeys['userPersonal']['entity_cif'] = 'ok';
-                }
+								if($config['vat_required']) {
+	                if (empty($this->entity_cif)) {
+	                    $errors['userPersonal']['entity_cif'] = Text::get('mandatory-project-field-entity_cif');
+	                /*} elseif (!Check::nif($this->entity_cif)) { */
+	                } else {
+											$valfunc = $config['locale']['function_validate_vat'];
+											$result = !call_user_func($valfunc, $this->entity_cif);
+											if(!$result) {
+	                    	$errors['userPersonal']['entity_cif'] = Text::get('validate-project-value-entity_cif');
+	                		} else {
+	                     	$okeys['userPersonal']['entity_cif'] = 'ok';
+	                		}
+									}
+								} else {
+									$okeys['userPersonal']['contract_cif'] = 'ok';
+								}
 
             } else { // FISICA
                 if (empty($this->contract_birthdate)) {

@@ -80,18 +80,38 @@ define('GOTEO_MAIL_SMTP_PASSWORD', '');
 
 define('GOTEO_MAIL', 'hola@goteo.org');
 
+$config['locale'] = array(
+	// default interface language
+	'default_language' => 'en',
+	// root directory of language files (relative to root of Goteo install)
+	'gettext_root' => 'locale',
+	// name of the gettext .po file (used for admin only texts at the moment)
+	'gettext_domain' => 'messages',
+	// gettext files are cached, to reload a new one requires to restart Apache which is stupid (and annoying while
+	//	developing) this setting tells the langueage code to bypass caching by using a clever file-renaming
+	// mechanism described in http://blog.ghost3k.net/articles/php/11/gettext-caching-in-php
+	'gettext_bypass_caching' => false,
+	// use php implementation (true) or apache module (false)?
+	// See this blogpost to understand why using the apache module is not a good idea
+	// unles you really know what you are doing
+	// http://blog.spinningkid.info/?p=2025
+	'gettext_use_php_implementation' => true,
+	
+	// Social Security Number (or personal iscal number depending on country)
+	'social_number_required' => false, // is this an absolute must?
+	'function_validate_social_number' => 'Check::nif', // if it is, which function should we call to validate it? This may take into account local variations
+	
+	// VAT validation configuration
+	'vat_required' => false, // is it an absolute must?
+	'function_validate_vat' => 'Check::vat', // if it is, which function should we call to validate it? This may take into account local variations
+);
+
 // Language
-define('GOTEO_DEFAULT_LANG', 'en');
-// name of the gettext .po file (used for admin only texts at the moment)
-define('GOTEO_GETTEXT_DOMAIN', 'messages');
-// gettext files are cached, to reload a new one requires to restart Apache which is stupid (and annoying while 
-//	developing) this setting tells the langueage code to bypass caching by using a clever file-renaming 
-// mechanism described in http://blog.ghost3k.net/articles/php/11/gettext-caching-in-php
-define('GOTEO_GETTEXT_BYPASS_CACHING', true);
+define('GOTEO_DEFAULT_LANG', $config['locale']['default_language']);
 
 // url
-define('SITE_URL', 'http://localhost:8888/');
-define('SRC_URL', 'http://localhost:8888/');
+define('SITE_URL', 'http://localhost:8080/');
+define('SRC_URL', 'http://localhost:8080/');
 
 // Cron params
 define('CRON_PARAM', '');

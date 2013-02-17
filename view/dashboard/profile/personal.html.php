@@ -21,6 +21,8 @@
 use Goteo\Library\Text,
     Goteo\Library\SuperForm;
 
+require_once 'config.php';
+
 define('ADMIN_NOAUTOSAVE', true);
 
 $errors = $this['errors'];
@@ -31,7 +33,7 @@ $this['level'] = 3;
 <form method="post" action="/dashboard/profile/personal" class="project" enctype="multipart/form-data">
 
 <?php
-echo new SuperForm(array(
+$form = array(
 
     'level'         => $this['level'],
     'method'        => 'post',
@@ -55,7 +57,7 @@ echo new SuperForm(array(
             'errors'    => !empty($errors['contract_name']) ? array($errors['contract_name']) : array(),
             'value'     => $personal->contract_name
         ),
-
+/*
         'contract_nif' => array(
             'type'      => 'textbox',
             'required'  => true,
@@ -65,7 +67,7 @@ echo new SuperForm(array(
             'errors'    => !empty($errors['contract_nif']) ? array($errors['contract_nif']) : array(),
             'value'     => $personal->contract_nif
         ),
-
+*/
         'phone' => array(
             'type'  => 'textbox',
             'required'  => true,
@@ -119,7 +121,22 @@ echo new SuperForm(array(
 
     )
 
-));
+);
+
+global $config;
+if($config['locale']['vat_required']) {
+	$form['elements']['contract_nif'] = array(
+      'type'      => 'textbox',
+      'required'  => true,
+      'title'     => Text::get('personal-field-contract_nif'),
+      'size'      => 15,
+      'hint'      => Text::get('tooltip-project-contract_nif'),
+      'errors'    => !empty($errors['contract_nif']) ? array($errors['contract_nif']) : array(),
+      'value'     => $personal->contract_nif
+  ); 
+}
+
+echo new SuperForm($form);
 
 ?>
 </form>
