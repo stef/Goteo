@@ -106,7 +106,7 @@ namespace Goteo\Library {
 		}
 
 		/*
-		 * Validación del numero VAT para los 27 paises de la UE
+		 * Validate VAT for all EU countries.
 		 */
 		public static function vat ($value) {
 

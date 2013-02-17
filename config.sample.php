@@ -95,7 +95,15 @@ $config['locale'] = array(
 	// See this blogpost to understand why using the apache module is not a good idea
 	// unles you really know what you are doing
 	// http://blog.spinningkid.info/?p=2025
-	'gettext_use_php_implementation' => true
+	'gettext_use_php_implementation' => true,
+	
+	// Social Security Number (or personal iscal number depending on country)
+	'social_number_required' => false, // is this an absolute must?
+	'function_validate_social_number' => 'Check::nif', // if it is, which function should we call to validate it? This may take into account local variations
+	
+	// VAT validation configuration
+	'vat_required' => false, // is it an absolute must?
+	'function_validate_vat' => 'Check::vat', // if it is, which function should we call to validate it? This may take into account local variations
 );
 
 // Language
