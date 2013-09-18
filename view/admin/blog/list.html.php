@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright (C) 2012 Platoniq y FundaciÃ³n Fuentes Abiertas (see README for details)
+ *  Copyright (C) 2012 Platoniq y Fundación Fuentes Abiertas (see README for details)
  *	This file is part of Goteo.
  *
  *  Goteo is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ use Goteo\Library\Text,
 
 $translator = ACL::check('/translate') ? true : false;
 ?>
-<a href="/admin/blog/add" class="button red">Nueva entrada</a>
+<a href="/admin/blog/add" class="button red"><? php _("Nueva entrada")?></a>
 
 <div class="widget board">
     <?php if (!empty($this['posts'])) : ?>
@@ -31,11 +31,11 @@ $translator = ACL::check('/translate') ? true : false;
         <thead>
             <tr>
                 <td><!-- Edit --></td>
-                <th>TÃ­tulo</th> <!-- title -->
-                <th>Fecha</th> <!-- date -->
-                <th>Publicado</th>
-                <th>En portada</th>
-                <th>Al pie</th>
+                <th><?php _("Título")?></th> <!-- title -->
+                <th><?php _("Fecha")?></th> <!-- date -->
+                <th><?php _("Publicado")?></th>
+                <th><?php _("En portada")?></th>
+                <th><?php _("Al pie")?></th>
                 <th><!-- Traducir--></th>
                 <td><!-- Remove --></td>
                 <td></td><!-- preview -->
@@ -45,23 +45,23 @@ $translator = ACL::check('/translate') ? true : false;
         <tbody>
             <?php foreach ($this['posts'] as $post) : ?>
             <tr>
-                <td><a href="/admin/blog/edit/<?php echo $post->id; ?>">[Editar]</a></td>
+                <td><a href="/admin/blog/edit/<?php echo $post->id; ?>"><?php _("[Editar]")?></a></td>
                 <td><?php echo $post->title; ?></td>
                 <td><?php echo $post->date; ?></td>
-                <td><?php echo $post->publish ? 'SÃ­' : ''; ?></td>
-                <td><?php echo $post->home ? 'SÃ­' : ''; ?></td>
-                <td><?php echo $post->footer ? 'SÃ­' : ''; ?></td>
+                <td><?php echo $post->publish ? 'Sí' : ''; ?></td>
+                <td><?php echo $post->home ? 'Sí' : ''; ?></td>
+                <td><?php echo $post->footer ? 'Sí' : ''; ?></td>
                 <?php if ($translator) : ?>
-                <td><a href="/translate/post/edit/<?php echo $post->id; ?>" >[Traducir]</a></td>
+                <td><a href="/translate/post/edit/<?php echo $post->id; ?>" ><?php _("[Traducir]")?></a></td>
                 <?php endif; ?>
-                <td><a href="/admin/blog/remove/<?php echo $post->id; ?>" onclick="return confirm('Seguro que deseas eliminar este registro?');">[Quitar]</a></td>
-                <td><a href="/blog/<?php echo $post->id; ?>?preview=<?php echo $_SESSION['user']->id ?>" target="_blank">[Ver publicado]</a></td>
+                <td><a href="/admin/blog/remove/<?php echo $post->id; ?>" onclick="return confirm('<?php _('Seguro que deseas eliminar este registro?')?>');"><?php _("[Quitar]")?></a></td>
+                <td><a href="/blog/<?php echo $post->id; ?>?preview=<?php echo $_SESSION['user']->id ?>" target="_blank"><?php _("[Ver publicado]")?></a></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
 
     </table>
     <?php else : ?>
-    <p>No se han encontrado registros</p>
+    <p><?php _("No se han encontrado registros")?></p>
     <?php endif; ?>
 </div>

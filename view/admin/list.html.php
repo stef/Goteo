@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright (C) 2012 Platoniq y FundaciÃ³n Fuentes Abiertas (see README for details)
+ *  Copyright (C) 2012 Platoniq y Fundación Fuentes Abiertas (see README for details)
  *	This file is part of Goteo.
  *
  *  Goteo is free software: you can redistribute it and/or modify
@@ -36,9 +36,9 @@ if (!empty($filters)) {
 }
 
 $botones = array(
-    'edit' => '[Editar]',
-    'remove' => '[Quitar]',
-    'translate' => '[Traducir]',
+    'edit' => _('[Editar]'),
+    'remove' => _('[Quitar]'),
+    'translate' => _('[Traducir]'),
     'up' => '[&uarr;]',
     'down' => '[&darr;]'
 );
@@ -92,14 +92,14 @@ $per = 100 / $cols;
             <tr>
             <?php foreach ($this['columns'] as $key=>$label) : ?>
                 <?php if ($key == 'translate') : ?>
-                    <td width="5%"><?php if ($translator) : ?><a href="/translate/<?php echo $this['model'].'/edit/'.$item->id; ?>" >[Traducir]</a><?php endif; ?>
+                    <td width="5%"><?php if ($translator) : ?><a href="/translate/<?php echo $this['model'].'/edit/'.$item->id; ?>" ><?php _('[Traducir]') ?></a><?php endif; ?>
                     </td>
                 <?php elseif ($key == 'remove') : ?>
-                    <td width="5%"><a href="<?php echo $this['url']?>/remove/<?php echo (is_object($item)) ? $item->id : $item['id']; ?>" onclick="return confirm('Seguro que deseas eliminar este registro?');">[Quitar]</a></td>
+                    <td width="5%"><a href="<?php echo $this['url']?>/remove/<?php echo (is_object($item)) ? $item->id : $item['id']; ?>" onclick="return confirm('<?php _('Seguro que deseas eliminar este registro?')?>');"><?php _('[Quitar]')?></a></td>
                 <?php elseif (in_array($key, array('edit', 'up', 'down'))) :
                     $id = (is_object($item)) ? $item->id : $item['id'];?>
                     <td width="5%">
-                        <a title="Registro <?php echo $id; ?>" href="<?php echo "{$this['url']}/{$key}/{$id}/{$filter}"; ?>"><?php echo $botones[$key]; ?></a>
+                        <a title="<?php _('Registro') ?> <?php echo $id; ?>" href="<?php echo "{$this['url']}/{$key}/{$id}/{$filter}"; ?>"><?php echo $botones[$key]; ?></a>
                     </td>
                 <?php elseif ($key == 'image') : ?>
                     <td width="<?php echo round($per)-5; ?>%"><?php if (!empty($item->$key)) : ?><img src="<?php echo SRC_URL ?>/image/<?php echo (is_object($item)) ? $item->$key : $item[$key]; ?>/110/110" alt="image" /><?php endif; ?></td>
@@ -112,6 +112,6 @@ $per = 100 / $cols;
         </tbody>
     </table>
     <?php else : ?>
-    <p>No se han encontrado registros</p>
+    <p><?php _("No se han encontrado registros") ?></p>
     <?php endif; ?>
 </div>
